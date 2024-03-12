@@ -4,7 +4,9 @@ import User from './src/User';
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 const Stack = createNativeStackNavigator();
+const Tab=createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
@@ -13,13 +15,24 @@ export default function App() {
         <Stack.Screen name="Login" component={Login}/>
       </Stack.Navigator>
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Tab.Navigator>
+    //     <Tab.Screen name="Home" component={Home} options={{headerRight:()=><TextInput/>}}/>
+    //     <Tab.Screen name="Login" component={Login}/>
+    //   </Tab.Navigator>
+    // </NavigationContainer>
   );
 }
+const Signup=()=>{
+  return<>
+    <Text>Signup</Text>
+  </>
+}
 const Login=(props)=>{
-  console.warn(props.route.params)
+  const name=props.route.params;
   return <>
     <View>
-      <Text>Login page Welcome {props.route.params.name}</Text>
+      <Text>Login Page {name}</Text>
     </View>
   </>
 }
