@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Display from './src/Display';
+import Product from './src/Product';
+
 const Stack = createNativeStackNavigator();
 const Tab=createBottomTabNavigator();
 export default function App() {
@@ -32,11 +36,11 @@ const Login=(props)=>{
   const name=props.route.params;
   return <>
     <View>
-      <Text>Login Page {name}</Text>
+      <Text>Hi,</Text>
+      <Text>Hello</Text>
     </View>
   </>
 }
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home=(props)=>{
   const [name,setName]=useState("Tuhin")
   const btnHandler=()=>{
@@ -97,6 +101,7 @@ const Home=(props)=>{
 
   }
   return <>
+  <ScrollView>
   <View style={styles.container}>
     <Text>Hello there</Text>
     <StatusBar style="auto" />
@@ -166,7 +171,9 @@ const Home=(props)=>{
   </Pressable>
   <Button title='Login page' onPress={() => props.navigation.navigate('Login',{name:"Tuhin"})}></Button>
   <Button title='Send Data' onPress={submitHandler}></Button>
-
+  <Display/>
+  <Product/>
+  </ScrollView>
   </>
 }
 const Userdata=(props)=>{
