@@ -36,6 +36,7 @@ const Login=(props)=>{
     </View>
   </>
 }
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home=(props)=>{
   const [name,setName]=useState("Tuhin")
   const btnHandler=()=>{
@@ -68,6 +69,33 @@ const Home=(props)=>{
   const modalHandler=()=>{
     setModal(!modal);
   }
+  const submitHandler=()=>{
+    console.log("Api called")
+    fetch("http://192.168.1.3:8081/users",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({name:"Sohit"})
+    }).then((result)=>{
+      console.log(result.json())
+      console.log("Data sent")
+    }).catch((er)=>{
+      console.log("error occured")
+      console.log(er)
+    })
+  }
+  const setData=async()=>{
+    await AsyncStorage.setItem("name","Tuhin");
+  }
+  const getData=async()=>{
+    const name=await AsyncStorage.getItem("name");
+    console.warn(name)
+  }
+  const removeData=async()=>{
+    await AsyncStorage.removeItem("name")
+
+  }
   return <>
   <View style={styles.container}>
     <Text>Hello there</Text>
@@ -77,6 +105,10 @@ const Home=(props)=>{
     <TextInput style={style.textinput} placeholder='Write your name' onChangeText={(text)=>textHandler(text)}></TextInput>
     <User/>
     <Button title='Press me' onPress={btnHandler}/>
+    <Button title='Set Data' onPress={setData}></Button>
+    <Button title='Get Data' onPress={getData}></Button>
+    <Button title='Remove Data' onPress={removeData}></Button>
+
     <FlatList
       data={user}
       renderItem={({item})=><Text>{item.name}</Text>}
@@ -133,6 +165,8 @@ const Home=(props)=>{
     <Text>Different Button</Text>
   </Pressable>
   <Button title='Login page' onPress={() => props.navigation.navigate('Login',{name:"Tuhin"})}></Button>
+  <Button title='Send Data' onPress={submitHandler}></Button>
+
   </>
 }
 const Userdata=(props)=>{
